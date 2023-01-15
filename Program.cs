@@ -7,9 +7,13 @@ namespace Slack_App
     {
         static void Main(string[] args)
         {
-            string token = "xoxb-4629455833220-4658671317777-kLdleXZEg6n3IwPgxCidvx7w";
+            string token = "xoxb-4629455833220-4658671317777-hbLNjOwapo3OLSNoJPrKbZD6";
             var writer = new SlackMessageWriter(token);
+            var reader = new SlackMessageReader(token);
+
             Task.WaitAll(writer.WriteMessage("C# test message-scanner app"));
+            var response = Task.Run(async () => await reader.ReadMessage("#the-better-india")).Result;
+            Console.WriteLine(response);
         }
     }
 }
