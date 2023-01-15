@@ -1,0 +1,71 @@
+{
+  "format": 1,
+  "restore": {
+    "/home/siya/Documents/DotNet/thebetterindia/thebetterindia.csproj": {}
+  },
+  "projects": {
+    "/home/siya/Documents/DotNet/thebetterindia/thebetterindia.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/home/siya/Documents/DotNet/thebetterindia/thebetterindia.csproj",
+        "projectName": "thebetterindia",
+        "projectPath": "/home/siya/Documents/DotNet/thebetterindia/thebetterindia.csproj",
+        "packagesPath": "/home/siya/.nuget/packages/",
+        "outputPath": "/home/siya/Documents/DotNet/thebetterindia/obj/",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "/home/siya/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net6.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net6.0": {
+            "targetAlias": "net6.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net6.0": {
+          "targetAlias": "net6.0",
+          "dependencies": {
+            "Newtonsoft.Json": {
+              "target": "Package",
+              "version": "[13.0.2, )"
+            },
+            "SlackAPI": {
+              "target": "Package",
+              "version": "[1.1.14, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/6.0.405/RuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}
