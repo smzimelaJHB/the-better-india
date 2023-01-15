@@ -12,15 +12,15 @@ namespace Slack_App
 
         public SlackMessageReader(string token)
         {
-            _url = "https://slack.com/api/conversations.list";
+            _url = "https://slack.com/api/conversations.history";
             _client = new HttpClient();
             _client.DefaultRequestHeaders.Authorization =
                 new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
         }
 
-        public async Task<string> ReadMessage(string channel)
+        public async Task<string> ReadMessage(string c, string Ts)
         {
-            var postObject = new { channel = "#the-better-india", limit = 1 };
+            var postObject = new { channel = c, limit = 1 , inclusive = true, latest = Ts};
             var json = JsonConvert.SerializeObject(postObject);
             var content = new StringContent(json, Encoding.UTF8, "application/json");
 
