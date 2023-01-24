@@ -1,19 +1,18 @@
 ﻿using System;
 using System.Threading.Tasks;
+using Jering.Javascript.NodeJS;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Slack_App
 {
     class Program
     {
-        static void Main(string[] args)
+        static async Task Main(string[] args)
         {
-            string token = "xoxb-4629455833220-4658671317777-hbLNjOwapo3OLSNoJPrKbZD6";
-            var writer = new SlackMessageWriter(token);
+            string token = "xoxp-4629455833220-4639625795521-4662937656563-04dec08ea91e20c10be5f04eac558d72";
             var reader = new SlackMessageReader(token);
-
-            Task.WaitAll(writer.WriteMessage("C# test message-scanner app"));
-            var response = Task.Run(async () => await reader.ReadMessage("C04JHEXM4A0","15712345.001500")).Result;
-            Console.WriteLine(response);
+            var response2 = Task.Run(async () => await reader.SearchMessage("The meaning")).Result;
+            Console.WriteLine(response2);
         }
     }
 }
