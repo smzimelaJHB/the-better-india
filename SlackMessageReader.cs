@@ -26,13 +26,22 @@ namespace Slack_App
 
             var response = await _client.PostAsync(_url, content);
             var responseString = await response.Content.ReadAsStringAsync();
-            dynamic data = JObject.Parse(responseString);
 
+            dynamic data = JObject.Parse(responseString);
+            WriteToCSV(data);
+
+            return responseString;
+        } 
+
+        public void WriteToCSV(dynamic data){
+
+            //initialize lists
             List <string> matchedUsernames = new List<string>();
             List <string> matchedChannelNames = new List<string>();
             List <string> matchedDates = new List<string>();
             List <string> matchedMessages = new List<string>();
 
+            //add data to lists
             for (int i = 0; i < data.messages.matches.Count; i++)
             {
                 matchedUsernames.Add(data.messages.matches[i].username.ToString());
@@ -42,23 +51,22 @@ namespace Slack_App
 
             }
 
+            //write to csv
             var csv = new StringBuilder();
             var Headers = new string[] { "Username", "ChannelName", "Date", "Message" };
             var newLine = string.Join(",", Headers);
             csv.AppendLine(newLine);
 
+            //add data to csv
             for (int i = 0; i < matchedUsernames.Count; i++)
             {
                 newLine = string.Join(",", matchedUsernames[i], matchedChannelNames[i], matchedDates[i], matchedMessages[i]);
                 csv.AppendLine(newLine);
             }
 
+            //write to file
             File.WriteAllText("data.csv", csv.ToString());
-
-
-
-            
-            return "";
-        } 
+            Console.WriteLine("Data written to CSV");
+        }
     }
 }   
