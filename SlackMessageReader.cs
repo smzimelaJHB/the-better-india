@@ -11,9 +11,9 @@ namespace Slack_App
         private readonly string _url;
         private readonly HttpClient _client;
 
-        public SlackMessageReader(string token)
+        public SlackMessageReader(string token,string query)
         {
-            _url = "https://slack.com/api/search.messages?query=The%20meaning&pretty=1";
+            _url = "https://slack.com/api/search.messages?query="+query+"&pretty=1";
             _client = new HttpClient();
             _client.DefaultRequestHeaders.Authorization =
                 new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
@@ -29,8 +29,7 @@ namespace Slack_App
 
             dynamic data = JObject.Parse(responseString);
             WriteToCSV(data);
-
-            return responseString;
+            return "Done";
         } 
 
         public void WriteToCSV(dynamic data){
@@ -55,7 +54,7 @@ namespace Slack_App
             var csv = new StringBuilder();
             var Headers = new string[] { "Username", "ChannelName", "Date", "Message" };
             var newLine = string.Join(",", Headers);
-            csv.AppendLine(newLine);
+            csv.AppendLine(newLine+Environment.NewLine);
 
             //add data to csv
             for (int i = 0; i < matchedUsernames.Count; i++)
@@ -66,7 +65,7 @@ namespace Slack_App
 
             //write to file
             File.WriteAllText("data.csv", csv.ToString());
-            Console.WriteLine("Data written to CSV");
+            Console.WriteLine(csv.ToString());
         }
     }
 }   
