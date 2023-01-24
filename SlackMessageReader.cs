@@ -19,16 +19,6 @@ namespace Slack_App
                 new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
         }
 
-        public async Task<string> ReadMessage(string c, string Ts)
-        {
-            var postString = "channel=" + c + "&limit=1&inclusive=true&latest=" + Ts;
-            var content = new StringContent(postString, Encoding.UTF8, "application/json");
-
-            var response = await _client.PostAsync(_url, content);
-            var responseString = await response.Content.ReadAsStringAsync();
-            return responseString;
-        }
-
         public async Task<string> SearchMessage(string _query)
         {   
             var postString = "&highlight=1&count=1";
@@ -47,9 +37,26 @@ namespace Slack_App
             {
                 matchedUsernames.Add(data.messages.matches[i].username.ToString());
                 matchedChannelNames.Add(data.messages.matches[i].channel.name.ToString());
-                matchedDates.Add(data.messages.matches[i].ts.ToString());
+                matchedDates.Add(new DateTime(1970, 1, 1, 0, 0, 0, 0).AddSeconds((double)data.messages.matches[i].ts).ToLocalTime().ToString());
                 matchedMessages.Add(data.messages.matches[i].text.ToString());
+
             }
+
+            var csv = new StringBuilder();
+            var Headers = new string[] { "Username", "ChannelName", "Date", "Message" };
+            var newLine = string.Join(",", Headers);
+            csv.AppendLine(newLine);
+
+            for (int i = 0; i < matchedUsernames.Count; i++)
+            {
+                newLine = string.Join(",", matchedUsernames[i], matchedChannelNames[i], matchedDates[i], matchedMessages[i]);
+                csv.AppendLine(newLine);
+            }
+
+            File.WriteAllText("data.csv", csv.ToString());
+
+
+
             
             return "";
         } 
